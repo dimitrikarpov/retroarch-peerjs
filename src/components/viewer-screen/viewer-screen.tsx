@@ -10,6 +10,8 @@ export const ViewerScreen = () => {
   const [peerId, setPeerId] = useState<string>()
   const [dataConnectionReady, setDataConnectionReady] = useState(false)
 
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   useEffect(() => {
     peerRef.current = new Peer()
 
@@ -27,6 +29,21 @@ export const ViewerScreen = () => {
       conn.on("open", () => {
         console.log("on.open")
       })
+    })
+
+    peerRef.current.on("call", (call) => {
+      console.log("peer.on.call")
+
+      call.on("stream", (stream) => {
+        console.log("call.on.stream", { stream })
+
+        videoRef.current!.srcObject = stream
+        setTimeout(() => {
+          videoRef.current?.play()
+        })
+      })
+
+      call.answer()
     })
 
     console.log({ peerRef })
@@ -73,6 +90,8 @@ export const ViewerScreen = () => {
       {dataConnectionReady && (
         <button onClick={onSendSomething}>send something</button>
       )}
+
+      <video ref={videoRef} width="800" height="600"></video>
     </div>
   )
 }

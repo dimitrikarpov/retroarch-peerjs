@@ -5,15 +5,19 @@ type Props = {
   coreUrl: string
   romBinary: Uint8Array
   retroarchRef: React.MutableRefObject<RetroarchCore | null>
+  onStart?: () => void
 }
 
 export const Emulator: React.FunctionComponent<Props> = ({
   coreUrl,
   romBinary,
   retroarchRef,
+  onStart,
 }) => {
   const onEmulatorStart = (retroarch: RetroarchCore) => {
     retroarchRef.current = retroarch
+
+    onStart?.()
   }
 
   return (

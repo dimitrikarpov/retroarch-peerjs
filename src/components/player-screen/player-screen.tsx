@@ -9,6 +9,7 @@ import { Emulator } from "./emulator"
 export const PlayerScreen = () => {
   const { peerRef, dataConnectionRef } = useConnection()
   const [peerId, setPeerId] = useState<string>()
+  const [viewerPeerId, setViewerPeerId] = useState<string>()
   const [dataConnectionReady, setDataConnectionReady] = useState(false)
   //
   const [rom, setRom] = useState<Uint8Array>()
@@ -28,6 +29,8 @@ export const PlayerScreen = () => {
 
       dataConnectionRef.current = conn
 
+      setViewerPeerId(conn.peer)
+
       conn.on("data", (data) => {
         console.log("connection.on.data", { data })
       })
@@ -46,9 +49,24 @@ export const PlayerScreen = () => {
     dataConnectionRef.current!.send(Math.random())
   }
 
-  const corePath = `/cores/${core}.js`
+  const onStreamClick = () => {
+    if (!retroarchRef.current || !peerRef.current || !viewerPeerId) return
 
-  console.log({ corePath })
+    const canvasEl = retroarchRef.current.module.canvas
+    const videoStream = canvasEl.captureStream(60)
+    // @ts-ignore
+    const audioStream = retroarchRef.current.module.RA.xdest
+      .stream as MediaStream
+    const stream = new MediaStream()
+    videoStream.getTracks().forEach((track) => stream.addTrack(track))
+    audioStream.getTracks().forEach((track) => stream.addTrack(track))
+
+    var call = peerRef.current.call(viewerPeerId, stream)
+  }
+
+  const coreUrl = `https://cdn.jsdelivr.net/gh/dimitrikarpov/retroarch-peerjs/cores/${core}.js`
+
+  console.log({ viewerPeerId })
 
   return (
     <div>
@@ -71,8 +89,10 @@ export const PlayerScreen = () => {
           <Emulator
             retroarchRef={retroarchRef}
             romBinary={rom!}
-            coreUrl={`/cores/${core}.js`}
+            coreUrl={coreUrl}
           />
+
+          <button onClick={onStreamClick}>stream!</button>
         </>
       )}
     </div>
