@@ -6,8 +6,9 @@ export const ViewerScreen = () => {
   const [playerPeerId, setPlayerPeerId] = useState<string>()
   const playerPeerInputRef = useRef<HTMLInputElement>(null)
 
-  const { peerRef } = useConnection()
+  const { peerRef, dataConnectionRef } = useConnection()
   const [peerId, setPeerId] = useState<string>()
+  const [dataConnectionReady, setDataConnectionReady] = useState(false)
 
   useEffect(() => {
     peerRef.current = new Peer()
@@ -39,12 +40,22 @@ export const ViewerScreen = () => {
     console.log("HERE")
 
     const conn = peerRef.current.connect(playerPeerInputRef.current!.value)
+
+    dataConnectionRef.current = conn
+
     conn.on("open", () => {
       conn.send("hi!")
+      setDataConnectionReady(true)
+    })
+
+    conn.on("data", (data) => {
+      console.log("connection.on.data 222", { data })
     })
   }
 
-  console.log("---", playerPeerInputRef.current?.value)
+  const onSendSomething = () => {
+    dataConnectionRef.current!.send(Math.random())
+  }
 
   return (
     <div>
@@ -57,6 +68,10 @@ export const ViewerScreen = () => {
           <input ref={playerPeerInputRef} />
           <button onClick={onAddPlayerIdButtonClick}>add player id</button>
         </div>
+      )}
+
+      {dataConnectionReady && (
+        <button onClick={onSendSomething}>send something</button>
       )}
     </div>
   )
