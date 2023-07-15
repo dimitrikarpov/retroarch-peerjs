@@ -9,7 +9,19 @@ import {
   SelectValue,
 } from "../ui/select"
 import { Button } from "../ui/button"
-import { ChangeEventHandler } from "react"
+import { ChangeEventHandler, useState } from "react"
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "../ui/dialog"
+import { PlayerConnect } from "./player-connect"
+import { ViewerConnect } from "./viewer-connect"
+import { ViewerConnectDialog } from "./viewer-connect-dialog"
+import { PlayerConnectDialog } from "./player-connect-dialog"
 
 type Props = {
   rom: Uint8Array | undefined
@@ -42,7 +54,7 @@ export const StartScreen: React.FunctionComponent<Props> = ({
   return (
     <div className="ml-auto mr-auto mt-24 w-fit">
       <Card>
-        <div className="flex h-[500px] w-[500px] flex-col justify-between p-5">
+        <div className="flex h-[500px] w-[550px] flex-col justify-between p-5">
           <div className="">
             <p className="text-base">
               Select ROM from Your local storage and choose proper platform.
@@ -85,13 +97,20 @@ export const StartScreen: React.FunctionComponent<Props> = ({
                 </Select>
               </div>
             </div>
+
+            <div className="mt-5 flex items-center gap-3">
+              <div>Do You want to stream the game?:</div>
+
+              <PlayerConnectDialog onConnect={() => setRole("player")} />
+
+              <p className="text-gray-600">not connected</p>
+            </div>
           </div>
 
           <div className="flex justify-between">
-            <Button onClick={() => setRole("viewer")} variant={"outline"}>
-              No, thanks! I want to watch remote gameplay
-            </Button>
-            <Button onClick={() => setRole("player")} disabled={!rom || !core}>
+            <ViewerConnectDialog onConnect={() => setRole("viewer")} />
+
+            <Button onClick={() => setRole("offline")} disabled={!rom || !core}>
               Start Game
             </Button>
           </div>

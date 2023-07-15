@@ -17,18 +17,18 @@ function App() {
 
   return (
     <>
-      {!role && (
-        <StartScreen
-          rom={rom}
-          core={core}
-          setRom={setRom}
-          setCore={setCore}
-          setRole={setRole}
-        />
-      )}
       <WebRTC>
-        {role === "player" && <PlayerScreen />}
-        {role === "viewer" && <ViewerScreen />}
+        {!role && (
+          <StartScreen
+            rom={rom}
+            core={core}
+            setRom={setRom}
+            setCore={setCore}
+            setRole={setRole}
+          />
+        )}
+        {role === "player" && <h2>PlayerScreen</h2>}
+        {role === "viewer" && <h2>viewer screen</h2>}
       </WebRTC>
     </>
   )
