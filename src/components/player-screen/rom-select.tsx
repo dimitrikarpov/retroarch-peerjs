@@ -14,13 +14,16 @@ export const RomSelect: React.FunctionComponent<Props> = ({
   setCore,
   setIsRomSelected,
 }) => {
-  const onRomUpload: ChangeEventHandler<HTMLInputElement> = async (e) => {
+  const storeRom = async (file: File) => {
+    const buffer = await file?.arrayBuffer()
+    setRom(new Uint8Array(buffer))
+  }
+
+  const onRomUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!e.target.files?.[0]) return
 
     const file = e.target.files?.[0]
-    const buffer = await file?.arrayBuffer()
-
-    setRom(new Uint8Array(buffer))
+    storeRom(file)
   }
 
   const onCoreChange: ChangeEventHandler<HTMLSelectElement> = (e) => {

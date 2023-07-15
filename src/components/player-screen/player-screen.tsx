@@ -61,7 +61,7 @@ export const PlayerScreen = () => {
     videoStream.getTracks().forEach((track) => stream.addTrack(track))
     audioStream.getTracks().forEach((track) => stream.addTrack(track))
 
-    var call = peerRef.current.call(viewerPeerId, stream)
+    peerRef.current.call(viewerPeerId, stream)
   }
 
   const coreUrl = `https://cdn.jsdelivr.net/gh/dimitrikarpov/retroarch-peerjs/cores/${core}.js`
