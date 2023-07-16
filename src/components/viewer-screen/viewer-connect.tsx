@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react"
 import { useConnection } from "../../webrtc"
 import Peer from "peerjs"
 import { Button } from "../ui/button"
+import { Skeleton } from "../ui/skeleton"
+import { Input } from "../ui/input"
+//@ts-ignore
+import clipboard from "clipboardy"
 
 type Props = {
   onConnect: () => void
@@ -10,18 +14,20 @@ type Props = {
 export const ViewerConnect: React.FunctionComponent<Props> = ({
   onConnect,
 }) => {
-  const [playerPeerId, setPlayerPeerId] = useState<string>()
   const playerPeerInputRef = useRef<HTMLInputElement>(null)
-
   const { peerRef, dataConnectionRef } = useConnection()
-  const [peerId, setPeerId] = useState<string>()
-  const [dataConnectionReady, setDataConnectionReady] = useState(false)
+  const [connectedWithSignalingService, setConnectedWithSignalingService] =
+    useState(false)
+  const [startConnectingWithPeer, setStartConnectingWithPeer] = useState(false)
 
   useEffect(() => {
     peerRef.current = new Peer()
 
     peerRef.current.on("open", function (id) {
-      setPeerId(id)
+      setConnectedWithSignalingService(true)
+      setTimeout(() => {
+        playerPeerInputRef.current?.focus()
+      })
     })
 
     peerRef.current.on("connection", (conn) => {
@@ -36,30 +42,13 @@ export const ViewerConnect: React.FunctionComponent<Props> = ({
       })
     })
 
-    // peerRef.current.on("call", (call) => {
-    //   console.log("peer.on.call")
-
-    //   call.on("stream", (stream) => {
-    //     console.log("call.on.stream", { stream })
-
-    //     // videoRef.current!.srcObject = stream
-    //     // setTimeout(() => {
-    //     //   videoRef.current?.play()
-    //     // })
-    //   })
-
-    //   call.answer()
-    // })
-
     console.log({ peerRef })
   }, [])
 
   const onAddPlayerIdButtonClick = () => {
     if (!peerRef.current) return
 
-    setPlayerPeerId(playerPeerInputRef.current?.value)
-
-    console.log("HERE")
+    setStartConnectingWithPeer(true)
 
     const conn = peerRef.current.connect(playerPeerInputRef.current!.value)
 
@@ -67,7 +56,6 @@ export const ViewerConnect: React.FunctionComponent<Props> = ({
 
     conn.on("open", () => {
       conn.send("hi!")
-      setDataConnectionReady(true)
       onConnect()
     })
 
@@ -76,23 +64,32 @@ export const ViewerConnect: React.FunctionComponent<Props> = ({
     })
   }
 
+  const onPasteBtnClick = () => {
+    if (!playerPeerInputRef.current) return
+
+    clipboard.read().then((something: string) => {
+      playerPeerInputRef.current!.value = something
+    })
+  }
+
   return (
     <div>
-      {!playerPeerId && (
-        <div>
-          <input ref={playerPeerInputRef} />
-          <Button variant="outline" onClick={onAddPlayerIdButtonClick}>
-            add player id
+      {!connectedWithSignalingService && <Skeleton className="h-10" />}
+
+      {connectedWithSignalingService && (
+        <div className="flex gap-2">
+          <Input ref={playerPeerInputRef} disabled={startConnectingWithPeer} />
+          <Button onClick={onPasteBtnClick} variant={"outline"}>
+            paste
+          </Button>
+
+          <Button
+            onClick={onAddPlayerIdButtonClick}
+            disabled={startConnectingWithPeer}
+          >
+            OK
           </Button>
         </div>
-      )}
-
-      {peerId && <p>My peer ID is: {peerId}</p>}
-
-      {dataConnectionReady && (
-        <p className="text-green-500 text-center font-extrabold text-lg uppercase ">
-          connected
-        </p>
       )}
     </div>
   )

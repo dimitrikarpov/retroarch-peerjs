@@ -2,6 +2,10 @@ import { useEffect, useState } from "react"
 import { useConnection } from "../../webrtc"
 import Peer from "peerjs"
 import { Skeleton } from "../ui/skeleton"
+//@ts-ignore
+import clipboard from "clipboardy"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
 
 type Props = {
   onConnect: () => void
@@ -12,8 +16,6 @@ export const PlayerConnect: React.FunctionComponent<Props> = ({
 }) => {
   const { peerRef, dataConnectionRef } = useConnection()
   const [peerId, setPeerId] = useState<string>()
-  // const [viewerPeerId, setViewerPeerId] = useState<string>()
-  const [dataConnectionReady, setDataConnectionReady] = useState(false)
 
   useEffect(() => {
     peerRef.current = new Peer()
@@ -27,8 +29,6 @@ export const PlayerConnect: React.FunctionComponent<Props> = ({
 
       dataConnectionRef.current = conn
 
-      // setViewerPeerId(conn.peer)
-
       conn.on("data", (data) => {
         console.log("connection.on.data", { data })
       })
@@ -37,7 +37,6 @@ export const PlayerConnect: React.FunctionComponent<Props> = ({
         console.log("on.open")
       })
 
-      setDataConnectionReady(true)
       onConnect()
     })
 
@@ -47,15 +46,14 @@ export const PlayerConnect: React.FunctionComponent<Props> = ({
   return (
     <div>
       <div className="flex gap-2 items-center">
-        <div>My ID</div>
         {!peerId && <Skeleton className="h-4 w-[300px]" />}
-        {peerId && <div>{peerId}</div>}
+        {peerId && (
+          <>
+            <Input value={peerId} disabled />
+            <Button onClick={() => clipboard.write(peerId)}>copy</Button>
+          </>
+        )}
       </div>
-      {dataConnectionReady && (
-        <p className="text-green-500 text-center font-extrabold text-lg uppercase ">
-          connected
-        </p>
-      )}
     </div>
   )
 }
