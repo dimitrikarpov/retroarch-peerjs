@@ -1,56 +1,25 @@
-import { useEffect, useRef, useState } from "react"
-import { useConnection } from "../../webrtc"
-import Peer from "peerjs"
-import { Core } from "../../App"
-import { RomSelect } from "./rom-select"
+import { useRef } from "react"
 import { type Retroarch as RetroarchCore } from "retroarch-core"
 import { Emulator } from "./emulator"
+import { Core } from "@/App"
+import { useConnection } from "@/webrtc"
 
-export const PlayerScreen = () => {
-  const { peerRef, dataConnectionRef } = useConnection()
-  const [peerId, setPeerId] = useState<string>()
-  const [viewerPeerId, setViewerPeerId] = useState<string>()
-  const [dataConnectionReady, setDataConnectionReady] = useState(false)
-  //
-  const [rom, setRom] = useState<Uint8Array>()
-  const [core, setCore] = useState<Core>("fceumm_libretro")
-  const [isRomSelected, setIsRomSelected] = useState(false)
+type Props = {
+  rom: Uint8Array
+  core: Core
+}
+
+export const PlayerScreen: React.FunctionComponent<Props> = ({ rom, core }) => {
   const retroarchRef = useRef<RetroarchCore | null>(null)
+  const { peerRef, dataConnectionRef } = useConnection()
 
-  useEffect(() => {
-    peerRef.current = new Peer()
+  const onStart = () => {
+    console.log("EMULATOR STARTED")
 
-    peerRef.current.on("open", function (id) {
-      setPeerId(id)
-    })
+    if (!peerRef.current || !dataConnectionRef.current || !retroarchRef.current)
+      return
 
-    peerRef.current.on("connection", (conn) => {
-      console.log("on.connection", { conn })
-
-      dataConnectionRef.current = conn
-
-      setViewerPeerId(conn.peer)
-
-      conn.on("data", (data) => {
-        console.log("connection.on.data", { data })
-      })
-
-      conn.on("open", () => {
-        console.log("on.open")
-      })
-
-      setDataConnectionReady(true)
-    })
-
-    console.log({ peerRef })
-  }, [])
-
-  const onSendSomething = () => {
-    dataConnectionRef.current!.send(Math.random())
-  }
-
-  const onStreamClick = () => {
-    if (!retroarchRef.current || !peerRef.current || !viewerPeerId) return
+    const viewerPeerId = dataConnectionRef.current.peer
 
     const canvasEl = retroarchRef.current.module.canvas
     const videoStream = canvasEl.captureStream(60)
@@ -66,35 +35,15 @@ export const PlayerScreen = () => {
 
   const coreUrl = `https://cdn.jsdelivr.net/gh/dimitrikarpov/retroarch-peerjs/cores/${core}.js`
 
-  console.log({ viewerPeerId })
-
   return (
     <div>
-      <h2>Player screen</h2>
-      {peerId && <p>My peer ID is: {peerId}</p>}
-      {dataConnectionReady && (
-        <button onClick={onSendSomething}>send something</button>
-      )}
-      {dataConnectionReady && (
-        <RomSelect
-          core={core}
-          setCore={setCore}
-          setRom={setRom}
-          setIsRomSelected={setIsRomSelected}
-        />
-      )}
-      {isRomSelected && (
-        <>
-          <h1>ready to start emulator</h1>
-          <Emulator
-            retroarchRef={retroarchRef}
-            romBinary={rom!}
-            coreUrl={coreUrl}
-          />
-
-          <button onClick={onStreamClick}>stream!</button>
-        </>
-      )}
+      <h1>New Player Screen</h1>
+      <Emulator
+        retroarchRef={retroarchRef}
+        romBinary={rom}
+        coreUrl={coreUrl}
+        onStart={onStart}
+      />
     </div>
   )
 }
