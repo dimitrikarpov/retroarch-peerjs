@@ -9,17 +9,7 @@ import {
   SelectValue,
 } from "../ui/select"
 import { Button } from "../ui/button"
-import { ChangeEventHandler, useState } from "react"
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "../ui/dialog"
-import { PlayerConnect } from "./player-connect"
-import { ViewerConnect } from "./viewer-connect"
+import { ChangeEventHandler } from "react"
 import { ViewerConnectDialog } from "./viewer-connect-dialog"
 import { PlayerConnectDialog } from "./player-connect-dialog"
 
@@ -101,7 +91,10 @@ export const StartScreen: React.FunctionComponent<Props> = ({
             <div className="mt-5 flex items-center gap-3">
               <div>Do You want to stream the game?:</div>
 
-              <PlayerConnectDialog onConnect={() => setRole("player")} />
+              <PlayerConnectDialog
+                onConnect={() => setRole("player")}
+                disabled={!rom || !core}
+              />
 
               <p className="text-gray-600">not connected</p>
             </div>

@@ -36,20 +36,20 @@ export const ViewerConnect: React.FunctionComponent<Props> = ({
       })
     })
 
-    peerRef.current.on("call", (call) => {
-      console.log("peer.on.call")
+    // peerRef.current.on("call", (call) => {
+    //   console.log("peer.on.call")
 
-      call.on("stream", (stream) => {
-        console.log("call.on.stream", { stream })
+    //   call.on("stream", (stream) => {
+    //     console.log("call.on.stream", { stream })
 
-        // videoRef.current!.srcObject = stream
-        // setTimeout(() => {
-        //   videoRef.current?.play()
-        // })
-      })
+    //     // videoRef.current!.srcObject = stream
+    //     // setTimeout(() => {
+    //     //   videoRef.current?.play()
+    //     // })
+    //   })
 
-      call.answer()
-    })
+    //   call.answer()
+    // })
 
     console.log({ peerRef })
   }, [])

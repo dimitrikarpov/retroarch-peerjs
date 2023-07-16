@@ -12,7 +12,7 @@ export const PlayerConnect: React.FunctionComponent<Props> = ({
 }) => {
   const { peerRef, dataConnectionRef } = useConnection()
   const [peerId, setPeerId] = useState<string>()
-  const [viewerPeerId, setViewerPeerId] = useState<string>()
+  // const [viewerPeerId, setViewerPeerId] = useState<string>()
   const [dataConnectionReady, setDataConnectionReady] = useState(false)
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const PlayerConnect: React.FunctionComponent<Props> = ({
 
       dataConnectionRef.current = conn
 
-      setViewerPeerId(conn.peer)
+      // setViewerPeerId(conn.peer)
 
       conn.on("data", (data) => {
         console.log("connection.on.data", { data })
