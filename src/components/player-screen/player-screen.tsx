@@ -30,6 +30,10 @@ export const PlayerScreen: React.FunctionComponent<Props> = ({ rom, core }) => {
     videoStream.getTracks().forEach((track) => stream.addTrack(track))
     audioStream.getTracks().forEach((track) => stream.addTrack(track))
 
+    stream
+      .getVideoTracks()[0]
+      .applyConstraints({ width: 800, height: 600, frameRate: 60 })
+
     peerRef.current.call(viewerPeerId, stream)
   }
 
