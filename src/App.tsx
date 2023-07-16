@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { WebRTC } from "./webrtc"
 import { StartScreen } from "./components/start-screen/start-screen"
-import { NewPlayerScreen } from "./components/start-screen/new-player-screen"
-import { NewViewerScreen } from "./components/start-screen/new-viewer-screen"
+import { PlayerScreen } from "./components/player-screen/player-screen"
+import { ViewerScreen } from "./components/viewer-screen/viewer-screen"
 
 export type Role = "player" | "viewer" | "offline"
 export type Core =
@@ -27,8 +27,8 @@ function App() {
             setRole={setRole}
           />
         )}
-        {role === "player" && <NewPlayerScreen rom={rom!} core={core!} />}
-        {role === "viewer" && <NewViewerScreen />}
+        {role === "player" && <PlayerScreen rom={rom!} core={core!} />}
+        {role === "viewer" && <ViewerScreen />}
       </WebRTC>
     </>
   )

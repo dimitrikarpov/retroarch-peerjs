@@ -10,8 +10,8 @@ import {
 } from "../ui/select"
 import { Button } from "../ui/button"
 import { ChangeEventHandler } from "react"
-import { ViewerConnectDialog } from "./viewer-connect-dialog"
-import { PlayerConnectDialog } from "./player-connect-dialog"
+import { ViewerConnectDialog } from "../viewer-screen/viewer-connect-dialog"
+import { PlayerConnectDialog } from "../player-screen/player-connect-dialog"
 
 type Props = {
   rom: Uint8Array | undefined
