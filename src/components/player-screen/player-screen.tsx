@@ -41,7 +41,6 @@ export const PlayerScreen: React.FunctionComponent<Props> = ({ rom, core }) => {
 
   return (
     <div>
-      <h1>New Player Screen</h1>
       <Emulator
         retroarchRef={retroarchRef}
         romBinary={rom}

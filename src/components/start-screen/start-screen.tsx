@@ -42,10 +42,10 @@ export const StartScreen: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div className="ml-auto mr-auto mt-24 w-fit">
+    <div className="min-h-[100dvh] grid justify-center content-center">
       <Card>
         <div className="flex h-[500px] w-[550px] flex-col justify-between p-5">
-          <div className="">
+          <div>
             <p className="text-base">
               Select ROM from Your local storage and choose proper platform.
               After game starts You can share gameplay
@@ -89,7 +89,7 @@ export const StartScreen: React.FunctionComponent<Props> = ({
             </div>
 
             <div className="mt-5 flex items-center gap-3">
-              <div>Do You want to stream the game?:</div>
+              <div>Do You want connect to viewer?</div>
 
               <PlayerConnectDialog
                 onConnect={() => setRole("player")}

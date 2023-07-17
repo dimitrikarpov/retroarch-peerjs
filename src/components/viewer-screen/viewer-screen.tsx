@@ -32,8 +32,6 @@ export const ViewerScreen = () => {
 
   return (
     <div>
-      <h2>New viewer screen</h2>
-
       <video ref={videoRef} width="800" height="600"></video>
     </div>
   )

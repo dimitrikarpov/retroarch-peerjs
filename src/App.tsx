@@ -3,6 +3,7 @@ import { WebRTC } from "./webrtc"
 import { StartScreen } from "./components/start-screen/start-screen"
 import { PlayerScreen } from "./components/player-screen/player-screen"
 import { ViewerScreen } from "./components/viewer-screen/viewer-screen"
+import { OfflinePlayScreen } from "./components/offline-play-screen/offline-play-screen"
 
 export type Role = "player" | "viewer" | "offline"
 export type Core =
@@ -16,21 +17,20 @@ function App() {
   const [core, setCore] = useState<Core>()
 
   return (
-    <>
-      <WebRTC>
-        {!role && (
-          <StartScreen
-            rom={rom}
-            core={core}
-            setRom={setRom}
-            setCore={setCore}
-            setRole={setRole}
-          />
-        )}
-        {role === "player" && <PlayerScreen rom={rom!} core={core!} />}
-        {role === "viewer" && <ViewerScreen />}
-      </WebRTC>
-    </>
+    <WebRTC>
+      {!role && (
+        <StartScreen
+          rom={rom}
+          core={core}
+          setRom={setRom}
+          setCore={setCore}
+          setRole={setRole}
+        />
+      )}
+      {role === "player" && <PlayerScreen rom={rom!} core={core!} />}
+      {role === "viewer" && <ViewerScreen />}
+      {role === "offline" && <OfflinePlayScreen rom={rom!} core={core!} />}
+    </WebRTC>
   )
 }
 
