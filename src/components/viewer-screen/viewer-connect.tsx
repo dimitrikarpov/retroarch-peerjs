@@ -23,7 +23,7 @@ export const ViewerConnect: React.FunctionComponent<Props> = ({
   useEffect(() => {
     peerRef.current = new Peer()
 
-    peerRef.current.on("open", function (id) {
+    peerRef.current.on("open", function () {
       setConnectedWithSignalingService(true)
       setTimeout(() => {
         playerPeerInputRef.current?.focus()
