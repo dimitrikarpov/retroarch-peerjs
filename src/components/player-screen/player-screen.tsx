@@ -1,8 +1,8 @@
-import { useRef } from "react"
 import { type Retroarch as RetroarchCore } from "retroarch-core"
-import { Emulator } from "./emulator"
+// import { Emulator } from "./emulator"
 import { Core } from "@/App"
 import { useConnection } from "@/webrtc"
+import { Emulator } from "../emulator/emulator"
 
 type Props = {
   rom: Uint8Array
@@ -10,22 +10,19 @@ type Props = {
 }
 
 export const PlayerScreen: React.FunctionComponent<Props> = ({ rom, core }) => {
-  const retroarchRef = useRef<RetroarchCore | null>(null)
   const { peerRef, dataConnectionRef } = useConnection()
 
-  const onStart = () => {
+  const onStart = (retroarch: RetroarchCore) => {
     console.log("EMULATOR STARTED")
 
-    if (!peerRef.current || !dataConnectionRef.current || !retroarchRef.current)
-      return
+    if (!peerRef.current || !dataConnectionRef.current) return
 
     const viewerPeerId = dataConnectionRef.current.peer
 
-    const canvasEl = retroarchRef.current.module.canvas
+    const canvasEl = retroarch.module.canvas
     const videoStream = canvasEl.captureStream(60)
     // @ts-ignore
-    const audioStream = retroarchRef.current.module.RA.xdest
-      .stream as MediaStream
+    const audioStream = retroarch.module.RA.xdest.stream as MediaStream
     const stream = new MediaStream()
     videoStream.getTracks().forEach((track) => stream.addTrack(track))
     audioStream.getTracks().forEach((track) => stream.addTrack(track))
@@ -37,16 +34,14 @@ export const PlayerScreen: React.FunctionComponent<Props> = ({ rom, core }) => {
     peerRef.current.call(viewerPeerId, stream)
   }
 
-  const coreUrl = `https://cdn.jsdelivr.net/gh/dimitrikarpov/retroarch-peerjs/cores/${core}.js`
-
   return (
-    <div>
-      <Emulator
-        retroarchRef={retroarchRef}
-        romBinary={rom}
-        coreUrl={coreUrl}
-        onStart={onStart}
-      />
+    <div
+      style={{
+        backgroundImage:
+          "radial-gradient( circle farthest-corner at 10% 20%,  rgba(151,10,130,1) 0%, rgba(33,33,33,1) 100.2% )",
+      }}
+    >
+      <Emulator core={core} rom={rom} onStart={onStart} />
     </div>
   )
 }
