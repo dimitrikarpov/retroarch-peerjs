@@ -1,6 +1,4 @@
-import { Retroarch } from "retroarch-react"
 import { Core } from "@/App"
-import { Overlay } from "../overlay/overlay"
 import { Emulator } from "../emulator/emulator"
 
 type Props = {

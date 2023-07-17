@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog"
+} from "../../ui/dialog"
 
 type Props = {
   coreName: string

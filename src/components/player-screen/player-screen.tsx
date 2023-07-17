@@ -1,5 +1,4 @@
 import { type Retroarch as RetroarchCore } from "retroarch-core"
-// import { Emulator } from "./emulator"
 import { Core } from "@/App"
 import { useConnection } from "@/webrtc"
 import { Emulator } from "../emulator/emulator"
