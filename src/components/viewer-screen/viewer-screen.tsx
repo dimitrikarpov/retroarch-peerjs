@@ -1,3 +1,4 @@
+import { setMediaBitrate } from "@/lib/setMediaBitrate"
 import { useConnection } from "@/webrtc"
 import { useEffect, useRef } from "react"
 
@@ -23,7 +24,9 @@ export const ViewerScreen = () => {
           })
         })
 
-        call.answer()
+        call.answer(undefined, {
+          sdpTransform: setMediaBitrate,
+        })
       })
     }
 

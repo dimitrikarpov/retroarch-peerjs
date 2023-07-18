@@ -2,6 +2,7 @@ import { type Retroarch as RetroarchCore } from "retroarch-core"
 import { Core } from "@/App"
 import { useConnection } from "@/webrtc"
 import { Emulator } from "../emulator/emulator"
+import { setMediaBitrate } from "@/lib/setMediaBitrate"
 
 type Props = {
   rom: Uint8Array
@@ -30,7 +31,9 @@ export const PlayerScreen: React.FunctionComponent<Props> = ({ rom, core }) => {
       .getVideoTracks()[0]
       .applyConstraints({ width: 800, height: 600, frameRate: 60 })
 
-    peerRef.current.call(viewerPeerId, stream)
+    peerRef.current.call(viewerPeerId, stream, {
+      sdpTransform: setMediaBitrate,
+    })
   }
 
   return (
