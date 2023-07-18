@@ -20,7 +20,8 @@ export const ControlsTableRow: React.FunctionComponent<Props> = ({
         <img
           src={icons.keyboard.path}
           alt=""
-          className="pixelated h-8 max-w-none"
+          className="h-8 max-w-none"
+          style={{ imageRendering: "pixelated" }}
           title={icons.keyboard.tooltip}
           key={icons.keyboard.path}
         />
@@ -30,7 +31,8 @@ export const ControlsTableRow: React.FunctionComponent<Props> = ({
         <img
           src={icons.ps.path}
           alt=""
-          className="pixelated h-8 max-w-none"
+          className="h-8 max-w-none"
+          style={{ imageRendering: "pixelated" }}
           title={icons.ps.tooltip}
           key={icons.ps.path}
         />
@@ -40,7 +42,8 @@ export const ControlsTableRow: React.FunctionComponent<Props> = ({
         <img
           src={icons.xbox.path}
           alt=""
-          className="pixelated h-8 max-w-none"
+          className="h-8 max-w-none"
+          style={{ imageRendering: "pixelated" }}
           title={icons.xbox.tooltip}
           key={icons.xbox.path}
         />
