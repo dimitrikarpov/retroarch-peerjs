@@ -1,5 +1,6 @@
 import { TControlIcons } from "./controls-configs"
 import clsx from "clsx"
+import { getControlImgPath } from "./getControlImgPath"
 
 type Props = {
   name: string
@@ -18,7 +19,7 @@ export const ControlsTableRow: React.FunctionComponent<Props> = ({
 
       <td>
         <img
-          src={icons.keyboard.path}
+          src={getControlImgPath(icons.keyboard.path)}
           alt=""
           className="h-8 max-w-none"
           style={{ imageRendering: "pixelated" }}
@@ -29,7 +30,7 @@ export const ControlsTableRow: React.FunctionComponent<Props> = ({
 
       <td>
         <img
-          src={icons.ps.path}
+          src={getControlImgPath(icons.ps.path)}
           alt=""
           className="h-8 max-w-none"
           style={{ imageRendering: "pixelated" }}
@@ -40,7 +41,7 @@ export const ControlsTableRow: React.FunctionComponent<Props> = ({
 
       <td>
         <img
-          src={icons.xbox.path}
+          src={getControlImgPath(icons.xbox.path)}
           alt=""
           className="h-8 max-w-none"
           style={{ imageRendering: "pixelated" }}

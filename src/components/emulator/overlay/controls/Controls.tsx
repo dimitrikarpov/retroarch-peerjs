@@ -2,6 +2,7 @@ import { useState } from "react"
 import { ControllerDotMark } from "./ControllerDotMark"
 import { ControlsTableRow } from "./ControlsTableRow"
 import { TControlsConfig } from "./controls-configs"
+import { getControlImgPath } from "./getControlImgPath"
 
 type Props = {
   config: TControlsConfig
@@ -17,7 +18,7 @@ export const Controls: React.FunctionComponent<Props> = ({ config }) => {
   return (
     <div>
       <div className="relative w-[450px]">
-        <img src={config.image} className="w-full" alt="" />
+        <img src={getControlImgPath(config.image)} className="w-full" alt="" />
 
         {config.elements.map(({ name, mark: { top, left } }) => (
           <ControllerDotMark
