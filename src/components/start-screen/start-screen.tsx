@@ -77,10 +77,13 @@ export const StartScreen: React.FunctionComponent<Props> = ({
                   <SelectContent>
                     <SelectGroup>
                       <SelectItem value="fceumm_libretro">
-                        Nintendo Entartainemt System
+                        Nintendo Entertainment System (NES)
                       </SelectItem>
                       <SelectItem value="genesis_plus_gx_libretro">
                         Sega Mega Drive
+                      </SelectItem>
+                      <SelectItem value="snes9x_libretro">
+                        Super Nintendo (SNES)
                       </SelectItem>
                     </SelectGroup>
                   </SelectContent>

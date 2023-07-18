@@ -48,6 +48,7 @@ const icons: TConfigIcons = {
       path: "/controls/k-right.png",
       tooltip: "RIGHT ARROW",
     },
+    rshift: { path: "/controls/k-rshift.png", tooltip: "right shift" },
     space: { path: "/controls/k-space.png", tooltip: "space" },
     enter: { path: "/controls/k-enter.png", tooltip: "enter" },
     z: { path: "/controls/k-z.png", tooltip: "Z" },
@@ -303,6 +304,123 @@ export const segaMDControlsConfig: TControlsConfig = {
     {
       name: "z",
       mark: { top: "57", left: "370" },
+      icons: {
+        keyboard: icons.keyboard.w,
+        ps: icons.ps.r1,
+        xbox: icons.xbox.r1,
+      },
+    },
+  ],
+}
+
+export const snesControlsConfig: TControlsConfig = {
+  image: "/controls/snes-controller.png",
+  elements: [
+    {
+      name: "up",
+      mark: {
+        top: "88",
+        left: "92",
+      },
+      icons: {
+        keyboard: icons.keyboard.up,
+        ps: icons.ps.dpadUp,
+        xbox: icons.xbox.dpadUp,
+      },
+    },
+    {
+      name: "down",
+      mark: { top: "137", left: "93" },
+      icons: {
+        keyboard: icons.keyboard.down,
+        ps: icons.ps.dpadDown,
+        xbox: icons.xbox.dpadDown,
+      },
+    },
+    {
+      name: "left",
+      mark: { top: "112", left: "69" },
+      icons: {
+        keyboard: icons.keyboard.left,
+        ps: icons.ps.dpadLeft,
+        xbox: icons.xbox.dpadLeft,
+      },
+    },
+    {
+      name: "right",
+      mark: { top: "112", left: "115" },
+      icons: {
+        keyboard: icons.keyboard.right,
+        ps: icons.ps.dpadRight,
+        xbox: icons.xbox.dpadRight,
+      },
+    },
+    {
+      name: "select",
+      mark: { top: "126", left: "176" },
+      icons: {
+        keyboard: icons.keyboard.rshift,
+        ps: icons.ps.options,
+        xbox: icons.xbox.options,
+      },
+    },
+    {
+      name: "start",
+      mark: { top: "126", left: "221" },
+      icons: {
+        keyboard: icons.keyboard.enter,
+        ps: icons.ps.share,
+        xbox: icons.xbox.share,
+      },
+    },
+    {
+      name: "a",
+      mark: { top: "112", left: "378" },
+      icons: {
+        keyboard: icons.keyboard.x,
+        ps: icons.ps.circle,
+        xbox: icons.xbox.b,
+      },
+    },
+    {
+      name: "b",
+      mark: { top: "143", left: "337" },
+      icons: {
+        keyboard: icons.keyboard.z,
+        ps: icons.ps.cross,
+        xbox: icons.xbox.a,
+      },
+    },
+    {
+      name: "x",
+      mark: { top: "81", left: "339" },
+      icons: {
+        keyboard: icons.keyboard.s,
+        ps: icons.ps.triangle,
+        xbox: icons.xbox.y,
+      },
+    },
+    {
+      name: "y",
+      mark: { top: "112", left: "297" },
+      icons: {
+        keyboard: icons.keyboard.a,
+        ps: icons.ps.square,
+        xbox: icons.xbox.x,
+      },
+    },
+    {
+      name: "L",
+      mark: { top: "15", left: "89" },
+      icons: {
+        keyboard: icons.keyboard.q,
+        ps: icons.ps.l1,
+        xbox: icons.xbox.l1,
+      },
+    },
+    {
+      name: "R",
+      mark: { top: "15", left: "341" },
       icons: {
         keyboard: icons.keyboard.w,
         ps: icons.ps.r1,
