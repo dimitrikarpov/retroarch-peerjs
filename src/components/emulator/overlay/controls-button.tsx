@@ -2,6 +2,7 @@ import { Controls } from "./controls/Controls"
 import {
   nesControlsConfig,
   segaMDControlsConfig,
+  snesControlsConfig,
 } from "./controls/controls-configs"
 import { Gamepad2Icon } from "lucide-react"
 import {
@@ -47,6 +48,9 @@ const getControls = (coreName: string) => {
 
     case "genesis_plus_gx_libretro":
       return segaMDControlsConfig
+
+    case "snes9x_libretro":
+      return snesControlsConfig
 
     default:
       throw new Error("no config found")
